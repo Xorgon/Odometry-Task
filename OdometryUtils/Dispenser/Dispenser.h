@@ -10,6 +10,7 @@
 
 class Dispenser {
 public:
+    Dispenser();
     Dispenser(int servoPin);
     void moveTo(int loc);
     void dispense();
