@@ -54,10 +54,25 @@ void DriveControl::turn(float radius, float theta, bool dirRight) {
     setSpeed(round(speed));
     setTurn(round(turn));
 
-    float distance1 = 2 * pi * (radius + wheelOffset) * theta / 360.; // distance the outer wheel travels.
+    float outerDist = 2 * pi * (radius + wheelOffset) * theta / 360.; // distance the outer wheel travels.
+	float currDist;
+	if (dirRight) {
+		currDist = getDistance1();
+	}
+	else {
+		currDist = getDistance2();
+	}
 
-    while (getDistance1() < distance1) {
-        //TODO: Any stopping distance calculations.
+
+    while (currDist < outerDist) {
+		if (dirRight) {
+			currDist = getDistance1();
+		}
+		else {
+			currDist = getDistance2();
+		}
+		
+		//TODO: Any stopping distance calculations.
     }
     stop();
     resetEncoders();
