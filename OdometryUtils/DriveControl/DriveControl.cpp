@@ -131,5 +131,5 @@ void DriveControl::setTurn(int turn) {
 void DriveControl::stop() {
     setSpeed(0);
     setTurn(0);
-    delay(round(25 * 127 / accelRate)); // Wait for motion to stop.
+    delay(round(25 * 127 / decelRate)); // Wait for motion to stop.
 }

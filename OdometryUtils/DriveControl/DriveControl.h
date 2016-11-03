@@ -34,6 +34,7 @@ private:
     float wheelRadius = 50;
     float maxSpeed = 127;
     int accelRate = 10;
+    int decelRate = 10;
     double pi = 3.14159265358979323846;
 
     void resetEncoders();
