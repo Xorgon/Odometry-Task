@@ -29,12 +29,12 @@ public:
 
 private:
     //TODO: Set this stuff correctly.
-    int mode = 3;
+    int mode = 2;
     float wheelOffset = 45;
     float wheelRadius = 50;
-    float maxSpeed = 127;
-    int accelRate = 10;
-    int decelRate = 10;
+    float maxSpeed = 10;
+    int accelRate = 1;
+    int decelRate = 1;
     double pi = 3.14159265358979323846;
 
     void resetEncoders();
