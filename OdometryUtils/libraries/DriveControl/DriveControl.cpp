@@ -15,6 +15,8 @@ DriveControl::DriveControl(bool initialize) {
         Wire.write(mode);
         Wire.endTransmission();
 
+        resetEncoders();
+
         setAcceleration(accelRate);
     }
 }
@@ -31,20 +33,15 @@ void DriveControl::resetEncoders() {
 
 void DriveControl::line(float distance) {
     setSpeed(128 + maxLineSpeed);
-    while (getDistance1() < (distance - lineStopDistance)) {
+    while (getDistance1() < (distance - stoppingDistance)) {
     }
     stop();
     resetEncoders();
 }
 
-void DriveControl::turn(float radius, float theta, bool dirRight, float turnStopDistance) {
+void DriveControl::turn(float radius, float theta, bool dirRight) {
     float speed = 128 + ((maxTurnSpeed * radius) / (radius + wheelOffset));
     float turn = wheelOffset * maxTurnSpeed / (radius + wheelOffset);
-
-//    if (radius == 0) {
-//        float speed = 128 + ((maxLineSpeed * radius) / (radius + wheelOffset));
-//        float turn = wheelOffset * maxLineSpeed / (radius + wheelOffset);
-//    }
 
     if (!dirRight) {
         turn = -turn;
@@ -55,18 +52,14 @@ void DriveControl::turn(float radius, float theta, bool dirRight, float turnStop
 
     float outerDist = 2 * pi * (radius + wheelOffset) * theta / 360.; // distance the outer wheel travels.
     float currDist;
-    if (!dirRight) {
+    if (dirRight) {
         currDist = getDistance1();
     } else {
         currDist = getDistance2();
     }
 
-    float maxDist = outerDist - turnStopDistance;
-//    if (radius == 0) {
-//        maxDist = outerDist - lineStopDistance;
-//    }
 
-    while (currDist < maxDist) {
+    while (currDist < (outerDist - stoppingDistance)) {
         if (dirRight) {
             currDist = getDistance1();
         } else {

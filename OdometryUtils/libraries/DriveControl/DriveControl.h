@@ -25,19 +25,18 @@ public:
 
     void line(float distance);
 
-    void turn(float radius, float theta, bool dirRight, float turnStopDistance);
+    void turn(float radius, float theta, bool dirRight);
 
 private:
     int mode = 2;
-    float wheelOffset = 129.75;
+    float wheelOffset = 131;
     float wheelRadius = 51.5;
-    float maxLineSpeed = 75;
+    float maxLineSpeed = 25;
     float maxTurnSpeed = 20;
     int accelRate = 1;
     int decelRate = 3;
     float pi = 3.14159265358979323846;
-    float lineStopDistance = 145.0;
-//    float turnStopDistance = 53;
+    float stoppingDistance = 20.0; //145.0;
 
     void resetEncoders();
 
