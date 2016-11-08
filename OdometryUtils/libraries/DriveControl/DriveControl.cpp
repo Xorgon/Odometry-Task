@@ -34,15 +34,14 @@ void DriveControl::resetEncoders() {
 
 void DriveControl::line(float distance) {
     setSpeed(128 + maxSpeed);
-    while (getDistance1() < distance) {
-        //TODO: Any stopping distance calculations.
+    while (getDistance1() < (distance - stoppingDistance)) {
     }
     stop();
     resetEncoders();
 }
 
 void DriveControl::turn(float radius, float theta, bool dirRight) {
-    float speed = 128 + maxSpeed * radius / (radius + wheelOffset);
+    float speed = 128 + ((maxSpeed * radius) / (radius + wheelOffset));
     float turn = wheelOffset * maxSpeed / (radius + wheelOffset);
 
     if (!dirRight) {
@@ -50,7 +49,7 @@ void DriveControl::turn(float radius, float theta, bool dirRight) {
     }
 
     setSpeed(round(speed));
-    setTurn(round(turn));
+    setTurn(round(128 + turn));
 
     float outerDist = 2 * pi * (radius + wheelOffset) * theta / 360.; // distance the outer wheel travels.
     float currDist;
@@ -61,14 +60,13 @@ void DriveControl::turn(float radius, float theta, bool dirRight) {
     }
 
 
-    while (currDist < outerDist) {
+    while (currDist < (outerDist - stoppingDistance)) {
         if (dirRight) {
             currDist = getDistance1();
         } else {
             currDist = getDistance2();
         }
 
-        //TODO: Any stopping distance calculations.
     }
     stop();
     resetEncoders();
@@ -126,6 +124,6 @@ void DriveControl::setTurn(int turn) {
 
 void DriveControl::stop() {
     setSpeed(128);
-    setTurn(0);
-    delay(round(25 * 127 / decelRate) + 50); // Wait for motion to stop.
+    setTurn(128);
+    delay(round(25 * maxSpeed / decelRate) + 50); // Wait for motion to stop.
 }

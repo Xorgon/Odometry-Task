@@ -10,7 +10,9 @@
 class Indicate {
 public:
     Indicate();
+
     Indicate(int ledPin, int piezoPin);
+
     void doIndicate();
 
 private:
@@ -18,8 +20,8 @@ private:
     int piezoPin;
 
     void flash();
+
     void beep(float frequency, float length);
 };
-
 
 #endif //ODOMETRY_TASK_INDICATE_H
