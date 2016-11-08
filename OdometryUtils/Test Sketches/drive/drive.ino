@@ -19,18 +19,8 @@ void setup() {
 
 void loop() {
     if (!done) {
-        driveControl.line(200);
-        indicate.doIndicate();
-        dispenser.dispense();
-        driveControl.turn(0, 180, true);
-        indicate.doIndicate();
-        driveControl.line(200);
-        indicate.doIndicate();
-        driveControl.turn(0, 180, false);
-        indicate.doIndicate();
+        driveControl.line(260);
+//        driveControl.turn(260.0, 90.0, false, 0.0);
         done = true;
     }
-
-//    driveControl.turn(180, 90, true);
-//    indicate.doIndicate();
 }
