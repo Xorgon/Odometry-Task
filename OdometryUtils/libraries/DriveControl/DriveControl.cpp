@@ -15,10 +15,7 @@ DriveControl::DriveControl(bool initialize) {
         Wire.write(mode);
         Wire.endTransmission();
 
-        Wire.beginTransmission(MD25ADDRESS);
-        Wire.write(ACCELERATION);
-        Wire.write(accelRate);
-        Wire.endTransmission();
+        setAcceleration(accelRate);
     }
 }
 
@@ -122,8 +119,17 @@ void DriveControl::setTurn(int turn) {
     Wire.endTransmission();
 }
 
+void DriveControl::setAcceleration(int a) {
+    Wire.beginTransmission(MD25ADDRESS);
+    Wire.write(ACCELERATION);
+    Wire.write(a);
+    Wire.endTransmission();
+}
+
 void DriveControl::stop() {
+    setAcceleration(decelRate);
     setSpeed(128);
     setTurn(128);
     delay(round(25 * maxSpeed / decelRate) + 50); // Wait for motion to stop.
+    setAcceleration(accelRate);
 }

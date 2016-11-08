@@ -30,12 +30,12 @@ public:
 private:
     int mode = 2;
     float wheelOffset = 131;
-    float wheelRadius = 50.75;
+    float wheelRadius = 51.5;
     float maxSpeed = 50;
-    int accelRate = 10;
+    int accelRate = 2;
     int decelRate = 10;
     float pi = 3.14159265358979323846;
-    float stoppingDistance = 31.0;
+    float stoppingDistance = 0.0;
 
     void resetEncoders();
 
@@ -46,6 +46,8 @@ private:
     void setSpeed(int speed);
 
     void setTurn(int turn);
+
+    void setAcceleration(int a);
 
     void stop();
 };
