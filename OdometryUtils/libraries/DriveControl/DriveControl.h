@@ -29,7 +29,7 @@ public:
 
 private:
     int mode = 2;
-    float wheelOffset = 45; //TODO: Set this to the new value.
+    float wheelOffset = 131;
     float wheelRadius = 50.75;
     float maxSpeed = 50;
     int accelRate = 10;
