@@ -1,6 +1,4 @@
-//
-// Created by Elijah on 27/10/2016.
-//
+// Created by Elijah Andrews on behalf of Team A
 
 #include "Dispenser.h"
 
@@ -13,6 +11,7 @@ Dispenser::Dispenser(int servoPin) {
     servo.write(0);
 }
 
+// Function to smoothly move the servo.
 void Dispenser::moveTo(int loc) {
     if (pos == loc) {
         return;
@@ -30,6 +29,7 @@ void Dispenser::moveTo(int loc) {
     }
 }
 
+// Function to dispense an M&M.
 void Dispenser::dispense() {
     moveTo(90);
     delay(50);

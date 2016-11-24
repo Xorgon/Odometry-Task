@@ -1,6 +1,4 @@
-//
-// Created by Elijah on 03/11/2016.
-//
+// Created by Elijah Andrews on behalf of Team A
 
 #ifndef ODOMETRY_TASK_INDICATE_H
 #define ODOMETRY_TASK_INDICATE_H

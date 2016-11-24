@@ -1,6 +1,4 @@
-//
-// Created by Elijah on 01/11/2016.
-//
+// Created by Elijah Andrews on behalf of Team A
 
 #include "DriveControl.h"
 
@@ -23,6 +21,7 @@ DriveControl::DriveControl(bool initialize) {
 
 DriveControl::DriveControl() {} // Allow for uninitialized global variable creation.
 
+// Resets encoders.
 void DriveControl::resetEncoders() {
     Wire.beginTransmission(MD25ADDRESS);
     Wire.write(CMD);
@@ -31,16 +30,20 @@ void DriveControl::resetEncoders() {
     delay(50);
 }
 
+// Drives in a line for a set distance.
 void DriveControl::line(float distance) {
-    setSpeed(128 + maxLineSpeed);
+    setSpeed(128 + maxLineSpeed); // +128 to accommodate mode 2
+
+    // Stops the motors at the appropriate location.
     while (getDistance1() < (distance - stoppingDistance)) {
     }
     stop();
     resetEncoders();
 }
 
+// Drives in an arc with radius, through angle theta, in the set direction.
 void DriveControl::turn(float radius, float theta, bool dirRight) {
-    float speed = 128 + ((maxTurnSpeed * radius) / (radius + wheelOffset));
+    float speed = 128 + ((maxTurnSpeed * radius) / (radius + wheelOffset)); // +128 to accommodate mode 2
     float turn = wheelOffset * maxTurnSpeed / (radius + wheelOffset);
 
     if (!dirRight) {
@@ -48,7 +51,7 @@ void DriveControl::turn(float radius, float theta, bool dirRight) {
     }
 
     setSpeed(round(speed));
-    setTurn(round(128 + turn));
+    setTurn(round(128 + turn)); // +128 to accommodate mode 2
 
     float outerDist = 2 * pi * (radius + wheelOffset) * theta / 360.; // distance the outer wheel travels.
     float currDist;
@@ -58,7 +61,7 @@ void DriveControl::turn(float radius, float theta, bool dirRight) {
         currDist = getDistance2();
     }
 
-
+    // Stops the motors at the appropriate location.
     while (currDist < (outerDist - stoppingDistance)) {
         if (dirRight) {
             currDist = getDistance1();
@@ -71,6 +74,7 @@ void DriveControl::turn(float radius, float theta, bool dirRight) {
     resetEncoders();
 }
 
+// Gets the distance of encoder 1 in mm.
 float DriveControl::getDistance1() {
     Wire.beginTransmission(MD25ADDRESS);
     Wire.write(ENCODERONE);
@@ -89,6 +93,7 @@ float DriveControl::getDistance1() {
     return (2 * pi * wheelRadius * poss / 360.); // Converting from degrees of rotation to distance in mm.
 }
 
+// Gets the distance of encoder 2 in mm.
 float DriveControl::getDistance2() {
     Wire.beginTransmission(MD25ADDRESS);
     Wire.write(ENCODERTWO);
@@ -107,6 +112,7 @@ float DriveControl::getDistance2() {
     return (2 * pi * wheelRadius * poss / 360.); // Converting from degrees of rotation to distance in mm.
 }
 
+// Sets the speed for the "SPEED1" register.
 void DriveControl::setSpeed(int speed) {
     Wire.beginTransmission(MD25ADDRESS);
     Wire.write(SPEED1);
@@ -114,6 +120,7 @@ void DriveControl::setSpeed(int speed) {
     Wire.endTransmission();
 }
 
+// Sets the turn for the "SPEED2" register.
 void DriveControl::setTurn(int turn) {
     Wire.beginTransmission(MD25ADDRESS);
     Wire.write(SPEED2);
@@ -121,6 +128,7 @@ void DriveControl::setTurn(int turn) {
     Wire.endTransmission();
 }
 
+// Sets the acceleration for the "ACCELERATION" register.
 void DriveControl::setAcceleration(int a) {
     Wire.beginTransmission(MD25ADDRESS);
     Wire.write(ACCELERATION);
@@ -128,6 +136,7 @@ void DriveControl::setAcceleration(int a) {
     Wire.endTransmission();
 }
 
+// Stops the robot.
 void DriveControl::stop() {
     setAcceleration(decelRate);
     setSpeed(128);

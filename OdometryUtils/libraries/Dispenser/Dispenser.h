@@ -1,6 +1,4 @@
-//
-// Created by Elijah on 27/10/2016.
-//
+// Created by Elijah Andrews on behalf of Team A
 
 #ifndef SKETCH_DISPENSE_H
 #define SKETCH_DISPENSE_H
